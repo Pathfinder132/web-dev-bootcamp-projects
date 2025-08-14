@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DOM Challenge Game</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        text-align: center;
+        padding: 20px;
+      }
+      h1 {
+        margin-bottom: 10px;
+      }
+      #playground {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .box {
+        width: 120px;
+        height: 120px;
+        background-color: lightblue;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      #challenge {
+        margin-top: 20px;
+        font-size: 1.2em;
+        color: #333;
+      }
+      #inputArea {
+        margin-top: 15px;
+      }
+      #codeInput {
+        width: 80%;
+        
+        padding: 8px;
+        font-family: monospace;
+        font-size: 1em;
+      }
+      button {
+        margin-top: 10px;
+        padding: 8px 12px;
+        cursor: pointer;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
+      #feedback {
+        margin-top: 15px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>DOM Manipulation Game</h1>
+
+    <div id="playground">
+      <div class="box">Box 1</div>
+      <div class="box">Box 2</div>
+      <div class="box">Box 3</div>
+    </div>
+
+    <p id="challenge">Click "Next Challenge" to start</p>
+    <button id="nextChallengeBtn">Next Challenge</button>
+
+    <div id="inputArea">
+      <input
+        type="text"
+        id="codeInput"
+        placeholder="Type your JS code here (e.g., document.querySelector('.box').style.background='red')"
+      />
+      <br />
+      <button id="runCodeBtn">Run Code</button>
+    </div>
+
+    <p id="feedback"></p>
+
+    <script>
+      const playground = document.getElementById("playground");
+      const challengeEl = document.getElementById("challenge");
+      const feedbackEl = document.getElementById("feedback");
+      const codeInput = document.getElementById("codeInput");
+
+      const challenges = [
+        {
+          task: "Change the background color of the first box to red.",
+          check: () =>
+            document.querySelector(".box").style.backgroundColor === "red",
+        },
+        {
+          task: "Change the text of Box 2 to 'Hello!'.",
+          check: () =>
+            document.querySelectorAll(".box")[1].textContent === "Hello!",
+        },
+        {
+          task: "Make Box 3 disappear.",
+          check: () =>
+            document.querySelectorAll(".box")[2].style.display === "none",
+        },
+        {
+          task: "Add a new box with the text 'Box 4'.",
+          check: () =>
+            document.querySelectorAll(".box").length === 4 &&
+            document.querySelectorAll(".box")[3].textContent === "Box 4",
+        },
+        {
+          task: "Change all boxes' text color to blue.",
+          check: () =>
+            Array.from(document.querySelectorAll(".box")).every(
+              (b) => b.style.color === "blue"
+            ),
+        },
+        {
+          task: "Log the number of boxes to the console.",
+          check: () => {
+            console.warn("This one is manual check in console!");
+            return true;
+          },
+        },
+      ];
+
+      let currentChallenge = null;
+
+      document
+        .getElementById("nextChallengeBtn")
+        .addEventListener("click", () => {
+          // Reset playground to initial state
+          playground.innerHTML = `
+        <div class="box">Box 1</div>
+        <div class="box">Box 2</div>
+        <div class="box">Box 3</div>
+      `;
+          feedbackEl.textContent = "";
+          codeInput.value = "";
+
+          // Pick a random challenge
+          currentChallenge =
+            challenges[Math.floor(Math.random() * challenges.length)];
+          challengeEl.textContent = "Challenge: " + currentChallenge.task;
+        });
+
+      document.getElementById("runCodeBtn").addEventListener("click", () => {
+        try {
+          eval(codeInput.value); // Run user code
+          if (currentChallenge && currentChallenge.check()) {
+            feedbackEl.textContent = "✅ Correct!";
+            feedbackEl.style.color = "green";
+          } else {
+            feedbackEl.textContent = "❌ Try Again!";
+            feedbackEl.style.color = "red";
+          }
+        } catch (err) {
+          feedbackEl.textContent = "⚠️ Error: " + err.message;
+          feedbackEl.style.color = "orange";
+        }
+      });
+    </script>
+  </body>
+</html>
