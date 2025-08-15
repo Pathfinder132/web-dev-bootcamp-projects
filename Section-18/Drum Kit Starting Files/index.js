@@ -5,9 +5,16 @@ document.addEventListener("keyup", function(E){
     setTimeout(function(){
         l.style.color = "#DA0463";
     }, 100);
-    makeSound(E.key);   
-    
-});
+    makeSound(E.key);
+    buttoAni(E.key);   
+}); 
+function buttoAni(currentKey){
+    let piep = document.querySelector("."+currentKey+".drum");
+    piep.classList.add("pressed");
+    setTimeout(() => {
+        piep.classList.remove("pressed");
+    }, 100);
+}
 function makeSound(key){
     let sym = document.querySelector("."+key+" img");
     sym.style.opacity=1;
@@ -54,5 +61,6 @@ for(let i = 0;i<document.querySelectorAll(".drum").length;i++){
     function (){
     let btn = this.innerHTML;
     makeSound(btn);
+    buttoAni(btn);
 });
 }

@@ -16,31 +16,31 @@ footer {
   font-family: sans-serif;
 }
 
-.w drum{
+.w.drum{
   background-image: url("images/tom1.png");
 }
 
-.a drum{
+.a.drum{
   background-image: url("images/tom2.png");
 }
 
-.s drum{
+.s.drum{
   background-image: url("images/tom3.png");
 }
 
-.d drum{
+.d.drum{
   background-image: url("images/tom4.png");
 }
 
-.j drum{
+.j.drum{
   background-image: url("images/snare.png");
 }
 
-.k drum{
+.k.drum{
   background-image: url("images/kick.png");
 }
 
-.l drum{
+.l.set{
   background-image: url("images/crash.png");
 }
 
@@ -52,9 +52,7 @@ footer {
   margin-bottom:-10%;
   gap:24px;
 }
-.symbols div{
-  
-}
+
 .symbols div img{
   display: inline-block;
   width: 150px;
